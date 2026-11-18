@@ -122,7 +122,6 @@ const DATA = RAW.split("\n").map((line, i) => {
     return { number: i + 1, symbol, name, mass, description };
 });
  
-// Returns [column, row] on your 18 x 9 grid (same layout as your commented list)
 function gridPosition(n) {
     if (n === 1) return [1, 1];
     if (n === 2) return [18, 1];
@@ -133,10 +132,10 @@ function gridPosition(n) {
     if (n <= 36) return [n - 18, 4];
     if (n <= 54) return [n - 36, 5];
     if (n <= 56) return [n - 54, 6];
-    if (n <= 71) return [n - 57 + 4, 8];   // lanthanides
+    if (n <= 71) return [n - 57 + 4, 8];   
     if (n <= 86) return [n - 72 + 4, 6];
     if (n <= 88) return [n - 86, 7];
-    if (n <= 103) return [n - 89 + 4, 9];  // actinides
+    if (n <= 103) return [n - 89 + 4, 9];  
     return [n - 104 + 4, 7];
 }
  
@@ -150,7 +149,6 @@ DATA.forEach(el => {
     box.style.gridColumn = column;
     box.style.gridRow = row;
  
-    // popup opens to the left for elements on the right side of the table
     if (column >= 15) box.classList.add("popup-left");
  
     box.innerHTML = `
