@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Periodic Table of Elements</title>
+
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00d7ff;
+        }
+
+        .periodic-table {
+            display: grid;
+            grid-template-columns: repeat(18, 65px);
+            grid-template-rows: repeat(9, 75px);
+            gap: 5px;
+            justify-content: center;
+            margin: 40px auto;
+            width: max-content;
+        }
+
+        .element {
+            background-color: #282828;
+            border: 1px solid #00aaff;
+            border-radius: 5px;
+            position: relative;
+            cursor: pointer;
+            transition: 0.2s;
+            min-width: 0;
+        }
+
+        .element:hover {
+            background-color: #005f87;
+            border: 2px solid #00d7ff;
+            transform: scale(1.08);
+            z-index: 10;
+        }
+
+        /* INFORMATION POPUP */
+
+        .element-info {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 75px;
+            width: 230px;
+            min-height: 280px;
+            background-color: #252526;
+            border: 2px solid #00aaff;
+            border-radius: 8px;
+            padding: 12px;
+            z-index: 100;
+            color: white;
+            box-shadow: 0 5px 20px black;
+        }
+
+        .element:hover .element-info {
+            display: block;
+        }
+
+        /* Popup placement for right-side elements */
+
+        .element.popup-left .element-info {
+            left: auto;
+            right: 75px;
+        }
+
+        .element-info h3 {
+            color: #00d7ff;
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .element-picture {
+            width: 100%;
+            height: 110px;
+            border: 1px dashed #888;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            box-sizing: border-box;
+        }
+
+        .element-info p {
+            font-size: 12px;
+            margin: 8px 0;
+        }
+
+        .series-label {
+            grid-column: 1 / 4;
+            color: #00d7ff;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer {
+            text-align: center;
+            color: #777;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 1250px) {
+            .periodic-table {
+                justify-content: start;
+                margin-left: 0;
+            }
+
+            body {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>PERIODIC TABLE OF ELEMENTS</h1>
+
+    <div class="periodic-table" id="periodicTable">
+
+        <!--Down from here are Elements na-->
+
+    </div>
+
+    <div class="footer">
+        Periodic Table | Element Information System
+    </div>
+
+    <script>
+        // Ginawa ko nang 118 elements hahahaha
+        const elements = [
+            // Period 1
+            [1, 1, 1], [2, 18, 1],
+
+            // Period 2
+            [3, 1, 2], [4, 2, 2],
+            [5, 13, 2], [6, 14, 2],
+            [7, 15, 2], [8, 16, 2],
+            [9, 17, 2], [10, 18, 2],
+
+            // Period 3
+            [11, 1, 3], [12, 2, 3],
+            [13, 13, 3], [14, 14, 3],
+            [15, 15, 3], [16, 16, 3],
+            [17, 17, 3], [18, 18, 3],
+
+            // Period 4
+            [19, 1, 4], [20, 2, 4],
+            [21, 3, 4], [22, 4, 4],
+            [23, 5, 4], [24, 6, 4],
+            [25, 7, 4], [26, 8, 4],
+            [27, 9, 4], [28, 10, 4],
+            [29, 11, 4], [30, 12, 4],
+            [31, 13, 4], [32, 14, 4],
+            [33, 15, 4], [34, 16, 4],
+            [35, 17, 4], [36, 18, 4],
+
+            // Period 5
+            [37, 1, 5], [38, 2, 5],
+            [39, 3, 5], [40, 4, 5],
+            [41, 5, 5], [42, 6, 5],
+            [43, 7, 5], [44, 8, 5],
+            [45, 9, 5], [46, 10, 5],
+            [47, 11, 5], [48, 12, 5],
+            [49, 13, 5], [50, 14, 5],
+            [51, 15, 5], [52, 16, 5],
+            [53, 17, 5], [54, 18, 5],
+
+            // Period 6
+            [55, 1, 6], [56, 2, 6],
+            [72, 4, 6], [73, 5, 6],
+            [74, 6, 6], [75, 7, 6],
+            [76, 8, 6], [77, 9, 6],
+            [78, 10, 6], [79, 11, 6],
+            [80, 12, 6], [81, 13, 6],
+            [82, 14, 6], [83, 15, 6],
+            [84, 16, 6], [85, 17, 6],
+            [86, 18, 6],
+
+            // Period 7
+            [87, 1, 7], [88, 2, 7],
+            [104, 4, 7], [105, 5, 7],
+            [106, 6, 7], [107, 7, 7],
+            [108, 8, 7], [109, 9, 7],
+            [110, 10, 7], [111, 11, 7],
+            [112, 12, 7], [113, 13, 7],
+            [114, 14, 7], [115, 15, 7],
+            [116, 16, 7], [117, 17, 7],
+            [118, 18, 7],
+
+            // Lanthanides - Row 8
+            [57, 4, 8], [58, 5, 8],
+            [59, 6, 8], [60, 7, 8],
+            [61, 8, 8], [62, 9, 8],
+            [63, 10, 8], [64, 11, 8],
+            [65, 12, 8], [66, 13, 8],
+            [67, 14, 8], [68, 15, 8],
+            [69, 16, 8], [70, 17, 8],
+            [71, 18, 8],
+
+            // Actinides - Row 9
+            [89, 4, 9], [90, 5, 9],
+            [91, 6, 9], [92, 7, 9],
+            [93, 8, 9], [94, 9, 9],
+            [95, 10, 9], [96, 11, 9],
+            [97, 12, 9], [98, 13, 9],
+            [99, 14, 9], [100, 15, 9],
+            [101, 16, 9], [102, 17, 9],
+            [103, 18, 9]
+        ];
+
+        const table = document.getElementById("periodicTable");
+
+        elements.forEach(([number, column, row]) => {
+
+            const box = document.createElement("div");
+            box.className = "element";
+
+            box.style.gridColumn = column;
+            box.style.gridRow = row;
+
+            // dito for elements infos (repeat niyo lang) 
+            if (column >= 15) {
+                box.classList.add("popup-left");
+            }
+
+            box.innerHTML = `
+                <div class="element-info">
+
+                    <h3>Element Information</h3>
+
+                    <div class="element-picture">
+                        Element Picture
+                    </div>
+
+                    <p>Element Name:</p>
+                    <p>Symbol:</p>
+                    <p>Atomic Number: ${number}</p>
+                    <p>Atomic Mass:</p>
+                    <p>Description:</p>
+
+                </div>
+            `;
+
+            table.appendChild(box);
+
+        });
+
+    </script>
+
+</body>
+</html>
